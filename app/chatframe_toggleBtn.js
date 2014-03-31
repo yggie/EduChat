@@ -1,6 +1,6 @@
 var pathname = window.location.pathname;
-var chatChannels = "#"+pathname.split('/')[3];
-//var chatChannels = $("#chatframe").attr('chatroom');//"#cs1691x";
+// var chatChannels = "#"+pathname.split('/')[3];
+var chatChannels = "cs1692x";
 var urlPrefix = 'https://cs1692x.moocforums.org/chatlog/edxframe/CS169.1x/3T2013/';
 
 var onChatTab = false;
@@ -21,17 +21,23 @@ $("#chatiframe").on('load', function() {
 });
 
 if ($.cookie('chat_default') === "closed" || window.outerWidth < 750) {
-	window.onload = function() {
-          $("#chat-button").one("click", function() {
-            init();
-          });
-	}
+  if (document.readyState === "complete") {
+    $("#chat-button").one("click", function() {
+      init();
+    });
+  } else {
+    window.onload = function() {
+      $("#chat-button").one("click", function() {
+        init();
+      });
+    }
+  }
 } else {
-	if (document.getElementById('chatiframe')) {
-	  init();
-	} else {
-	  window.onload = init;
-	}
+  if (document.getElementById('chatiframe') || document.readyState === "complete") {
+    init();
+  } else {
+    window.onload = init;
+  }
 }
 
 function getContentInContainer(matchClass) {
